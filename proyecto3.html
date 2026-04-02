@@ -194,6 +194,38 @@
     padding: 4px 10px;
   }
 
+  /* youtube placeholder */
+  .yt-placeholder {
+    width: 100%; height: 100%;
+    background: #1a1a1a;
+    display: flex; align-items: flex-end;
+    padding: 16px;
+    transition: background 0.3s;
+  }
+  .gallery-item:hover .yt-placeholder { background: #252525; }
+  .yt-placeholder-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+  }
+  .yt-play-btn {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .yt-play-btn svg {
+    width: 56px; height: 56px;
+    filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    transition: transform 0.2s;
+  }
+  .gallery-item:hover .yt-play-btn svg { transform: scale(1.12); }
+  .lightbox-yt {
+    width: min(90vw, 960px);
+    aspect-ratio: 16/9;
+    border: none;
+  }
+
   /* placeholder vacío para agregar media */
   .gallery-add {
     aspect-ratio: 4/3;
@@ -350,10 +382,17 @@ Además, en ambos frentes, se generan recesos.Estos buscan dotar los ingresos de
   </p>
    <div class="gallery" id="gallery-sketchup">
     <!-- Ejemplo con video -->
-    <div class="gallery-item" onclick="openLightbox('sketchup', 0)">
-      <video src="proyecto3/video/sket.mp4" muted autoplay loop playsinline></video>
+    <div class="gallery-item" onclick="openYTLightbox('JjLofppcZVE', 'SketchUp — 1 / 1')">
+      <div class="yt-placeholder">
+        <span class="yt-placeholder-label">SketchUp — Modelado volumétrico</span>
+      </div>
       <div class="video-badge">video</div>
-      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+      <div class="yt-play-btn">
+        <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M66.5 7.7c-.8-2.9-3-5.1-5.8-5.8C55.8 0 34 0 34 0S12.2 0 7.3 1.9C4.5 2.6 2.3 4.8 1.5 7.7 0 12.7 0 24 0 24s0 11.3 1.5 16.3c.8 2.9 3 5.1 5.8 5.8C12.2 48 34 48 34 48s21.8 0 26.7-1.9c2.8-.7 5-2.9 5.8-5.8C68 35.3 68 24 68 24s0-11.3-1.5-16.3z" fill="rgba(255,255,255,0.15)"/>
+          <path d="M45 24 27 14v20" fill="white"/>
+        </svg>
+      </div>
     </div>
   </div>
 </div>
@@ -369,10 +408,17 @@ Además, en ambos frentes, se generan recesos.Estos buscan dotar los ingresos de
   </p>
   <div class="gallery" id="gallery-3dsmax">
     <!-- Ejemplo con video -->
-    <div class="gallery-item" onclick="openLightbox('3dsmax', 0)">
-      <video src="proyecto3/video/3dm.mp4" muted autoplay loop playsinline></video>
+    <div class="gallery-item" onclick="openYTLightbox('ie-MbCFYOsA', '3ds Max — 1 / 1')">
+      <div class="yt-placeholder">
+        <span class="yt-placeholder-label">3ds Max — Modelado detallado</span>
+      </div>
       <div class="video-badge">video</div>
-      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+      <div class="yt-play-btn">
+        <svg viewBox="0 0 68 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M66.5 7.7c-.8-2.9-3-5.1-5.8-5.8C55.8 0 34 0 34 0S12.2 0 7.3 1.9C4.5 2.6 2.3 4.8 1.5 7.7 0 12.7 0 24 0 24s0 11.3 1.5 16.3c.8 2.9 3 5.1 5.8 5.8C12.2 48 34 48 34 48s21.8 0 26.7-1.9c2.8-.7 5-2.9 5.8-5.8C68 35.3 68 24 68 24s0-11.3-1.5-16.3z" fill="rgba(255,255,255,0.15)"/>
+          <path d="M45 24 27 14v20" fill="white"/>
+        </svg>
+      </div>
     </div>
     <div class="gallery-item" onclick="openLightbox('3dsmax', 1)">
       <img src="proyecto3/images/3dsmax-1.jpg" alt="vray render">
@@ -453,8 +499,23 @@ Además, en ambos frentes, se generan recesos.Estos buscan dotar los ingresos de
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
     document.body.style.overflow = '';
-    // pausar videos
     document.querySelectorAll('#lightbox-content video').forEach(v => v.pause());
+    document.querySelectorAll('#lightbox-content iframe').forEach(f => { f.src = ''; });
+    document.querySelectorAll('.lightbox-nav').forEach(b => b.style.display = '');
+  }
+
+  // ── YouTube lightbox ──
+  function openYTLightbox(videoId, caption) {
+    const content = document.getElementById('lightbox-content');
+    const cap = document.getElementById('lightbox-caption');
+    content.innerHTML = `<iframe class="lightbox-yt"
+      src="https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0"
+      allow="autoplay; encrypted-media; fullscreen"
+      allowfullscreen></iframe>`;
+    cap.textContent = caption;
+    document.querySelectorAll('.lightbox-nav').forEach(b => b.style.display = 'none');
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
   }
 
   function closeLightboxOutside(e) {
