@@ -799,7 +799,7 @@ presentaciones impactantes que potencian la comunicación de proyectos.
     </div>
   </div>
   <div class="cv-download">
-    <a href="images/cv-marcos-sola.pdf" download class="btn-secondary"> Descargar CV Completo
+    <a id="cvDownloadBtn" href="images/cv-marcos-sola.pdf" download="cv-marcos-sola.pdf" class="btn-secondary"> Descargar CV Completo
     </a>
   </div>
 </section>
@@ -974,7 +974,7 @@ presentaciones impactantes que potencian la comunicación de proyectos.
   <span class="footer-text">Visualizando con precisión</span>
 </footer>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 
   // Nav scroll
   window.addEventListener('scroll', () => {
@@ -999,15 +999,232 @@ presentaciones impactantes que potencian la comunicación de proyectos.
       const filter = btn.dataset.filter;
 
       cards.forEach(card => {
-        const tools = (card.dataset.tools || '').split(' ');
+        const tools = (card.dataset.tools || '').toLowerCase();
         if (filter === 'all' || tools.includes(filter)) {
-          card.style.display = '';
+          card.classList.remove('hidden');
         } else {
-          card.style.display = 'none';
+          card.classList.add('hidden');
         }
       });
     });
   });
+
 </script>
+
+<!-- BOTÓN FLOTANTE DE TRADUCCIÓN -->
+<button id="translateBtn" onclick="toggleLanguage()" title="Translate to English">
+  <span id="translateIcon">EN</span>
+</button>
+
+<style>
+  #translateBtn {
+    position: fixed;
+    bottom: 32px;
+    left: 32px;
+    z-index: 9999;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--charcoal);
+    color: var(--cream);
+    border: 1.5px solid var(--accent);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  #translateBtn:hover {
+    background: var(--accent-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.3);
+  }
+  #translateBtn.active {
+    background: var(--accent-dark);
+    border-color: var(--cream);
+  }
+</style>
+
+<script>
+  /* ─── TRANSLATION DICTIONARY ─── */
+  const translations = {
+    // NAV
+    'Inicio': 'Home',
+    'Perfil': 'Profile',
+    'Proyectos': 'Projects',
+    'Contacto': 'Contact',
+
+    // HERO
+    'Arquitecto, 3d Visualizer, Bim Modeler & Diseñador': 'Architect, 3D Visualizer, BIM Modeler & Designer',
+    'Ver Proyectos': 'View Projects',
+    'Descargar Portafolio': 'Download Portfolio',
+    'Años exp.': 'Years exp.',
+    'Softwares': 'Software',
+
+    // HERO DESC (handled by selector)
+
+    // SECTION TITLES
+    'Perfil': 'Profile',
+    'Profesional': 'Professional',
+    'Currículum': 'Curriculum',
+    'Vitae': 'Vitae',
+    'Seleccionados': 'Selected',
+
+    // SOBRE MÍ labels
+    'Nombre': 'Name',
+    'Especialización': 'Specialization',
+    'Arquitectura & Visualización': 'Architecture & Visualization',
+    'Ubicación': 'Location',
+    'Disponibilidad': 'Availability',
+    'Disponible para posiciones en arquitectura, documentación técnica y visualización 3D.': 'Available for positions in architecture, technical documentation, and 3D visualization.',
+
+    // Software levels
+    'Avanzado': 'Advanced',
+    'Intermedio': 'Intermediate',
+    'Herramientas de IA generativa': 'Generative AI Tools',
+
+    // CV
+    'Experiencia Profesional': 'Professional Experience',
+    'Formación Académica': 'Academic Background',
+    '2022 — Hoy': '2022 — Present',
+    '3d Visualizer Independiente': 'Freelance 3D Visualizer',
+    'Desarrollo de modelos 3D y renders arquitectónicos fotorrealistas a partir de planos, gestionando proyectos visuales para presentación y comunicación de arquitectura.': 'Development of 3D models and photorealistic architectural renders from floor plans, managing visual projects for architectural presentation and communication.',
+    'Data Entry': 'Data Entry',
+    'Gestión y control de información digital mediante carga, validación y organización de datos para asegurar su precisión y disponibilidad.': 'Management and control of digital information through data entry, validation, and organization to ensure accuracy and availability.',
+    'Pasante Legajista - Proyectista': 'Architecture Intern - Draftsman',
+    'Participación en el desarrollo de proyectos arquitectónicos mediante relevamientos, elaboración de documentación técnica y producción de material gráfico para su comunicación.': 'Participation in the development of architectural projects through surveys, technical documentation, and graphic material production.',
+    'Arquitecto': 'Architect',
+    'Título de Arquitecto. Proyecto de tesis: Conjunto de viviendas "Prom: paseo a casa".': 'Architecture Degree. Thesis project: Housing complex "Prom: walk home".',
+    'Modelado y gestión BIM': 'BIM Modeling and Management',
+    'Introducción a la metodología BIM aplicada al modelado, coordinación y gestión de información en proyectos de arquitectura.': 'Introduction to BIM methodology applied to modeling, coordination, and information management in architectural projects.',
+    'Curso Visualización Arquitectónica': 'Architectural Visualization Course',
+    'Curso de visualización arquitectónica enfocado en modelado 3D, materiales, iluminación y renders fotorrealistas con 3ds Max y Corona.': 'Architectural visualization course focused on 3D modeling, materials, lighting, and photorealistic renders with 3ds Max and Corona.',
+    'Descargar CV Completo': 'Download Full CV',
+
+    // PROJECTS section
+    'Todos': 'All',
+    'Residencial': 'Residential',
+    'Institucional': 'Institutional',
+    'Proyecto Final de Carrera - Conjunto viviendas Prom': 'Final Degree Project - Prom Housing Complex',
+    'Brigada Aérea - Santa Fe / Práctica Profesional': 'Air Brigade - Santa Fe / Professional Practice',
+    'Torre Francia - Proyecto Académico': 'Torre Francia - Academic Project',
+    'Casa Mirav - Visualización 3d': 'Casa Mirav - 3D Visualization',
+    'Casa Kóren - Visualización 3d': 'Casa Kóren - 3D Visualization',
+    'Casa Estudio Ed - Legajo': 'Casa Estudio Ed - Technical File',
+
+    // MÁS TRABAJOS
+    'Si querés ver más trabajos y actualizaciones': 'Want to see more work and updates',
+    'Podés encontrarme': "You can find me",
+    'también en': 'also on',
+
+    // CONTACTO
+    'Cada proyecto': 'Every project',
+    'comienza con': 'starts with',
+    'una': 'a',
+    'conversación.': 'conversation.',
+    'Mensaje': 'Message',
+    'Contame sobre tu proyecto...': 'Tell me about your project...',
+    'Enviar Mensaje': 'Send Message',
+    'Tu nombre completo': 'Your full name',
+
+    // FOOTER
+    'Visualizando con precisión': 'Visualizing with precision',
+  };
+
+  // Texts that need full innerHTML replacement (multi-line or with HTML)
+  const richTranslations = {
+    es: {
+      '.hero-desc': `Specialist in 3D/2D design and architecture with over 5 years of experience. Professional expertise in modeling, rendering and <span style="font-weight:600;">architectural visualization</span>, as well as in the creation of <span style="font-weight:600;">technical files and Revit documentation</span>. Skilled at developing impactful presentations that enhance project communication.`,
+      '.contact-info-big': `Every project<br>starts with<br>a <em>conversation.</em>`,
+      '.sobre-text': `<p>I graduated as an architect during the pandemic — a challenging context to start a professional career. During that period I worked in Data Entry while finding my path in architecture. Over time, my interest in visual representation led me to specialize in architectural visualization and to found my own 3D rendering studio.</p>
+      <p>I command the full digital workflow: from technical documentation in AutoCAD and Revit, conceptual modeling in SketchUp, to photorealistic visualization with 3ds Max and Corona Render. This allows me to accompany projects from ideation through final presentation.</p>
+      <p>I have mostly worked on residential projects, along with some commercial projects on a freelance basis.</p>
+      <p>After starting my own path in architectural visualization, I continue seeking new professional challenges that allow me to keep growing, collaborate with teams, and contribute my experience in architecture and 3D representation.</p>`,
+    },
+    original: {}
+  };
+
+  let isEnglish = false;
+
+  function toggleLanguage() {
+    isEnglish = !isEnglish;
+    const btn = document.getElementById('translateBtn');
+    const icon = document.getElementById('translateIcon');
+
+    if (isEnglish) {
+      btn.classList.add('active');
+      icon.textContent = 'ES';
+      btn.title = 'Volver al español';
+      applyTranslation(true);
+    } else {
+      btn.classList.remove('active');
+      icon.textContent = 'EN';
+      btn.title = 'Translate to English';
+      applyTranslation(false);
+    }
+  }
+
+  // Store originals on first run
+  let originalsStored = false;
+  const originals = {};
+
+  function storeOriginals() {
+    if (originalsStored) return;
+    // Store rich elements
+    ['.hero-desc', '.contact-info-big', '.sobre-text'].forEach(sel => {
+      const el = document.querySelector(sel);
+      if (el) originals[sel] = el.innerHTML;
+    });
+    originalsStored = true;
+  }
+
+  function walkAndReplace(node, dict) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      const trimmed = node.textContent.trim();
+      if (trimmed && dict[trimmed]) {
+        node.textContent = node.textContent.replace(trimmed, dict[trimmed]);
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Skip script/style tags and the translate button
+      if (['SCRIPT','STYLE','BUTTON'].includes(node.tagName)) return;
+      if (node.id === 'translateBtn') return;
+      node.childNodes.forEach(child => walkAndReplace(child, dict));
+    }
+  }
+
+  function applyTranslation(toEnglish) {
+    storeOriginals();
+
+    if (toEnglish) {
+      // Rich (HTML) replacements
+      document.querySelector('.hero-desc').innerHTML = richTranslations.es['.hero-desc'];
+      document.querySelector('.contact-info-big').innerHTML = richTranslations.es['.contact-info-big'];
+      document.querySelector('.sobre-text').innerHTML = richTranslations.es['.sobre-text'];
+      // Walk all text nodes
+      walkAndReplace(document.body, translations);
+      // Swap CV download to English version
+      const cvBtn = document.getElementById('cvDownloadBtn');
+      if (cvBtn) {
+        cvBtn.href = 'images/cv-marcos-sola_EN.pdf';
+        cvBtn.download = 'cv-marcos-sola_EN.pdf';
+      }
+    } else {
+      // Restore originals
+      Object.keys(originals).forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) el.innerHTML = originals[sel];
+      });
+      // Restore all text: reload from stored originals via full page clone trick
+      // Instead, reload page state from stored snapshot
+      location.reload();
+    }
+  }
+</script>
+
 </body>
 </html>
