@@ -207,6 +207,34 @@
   }
   .gallery-add-icon { font-size: 28px; opacity: 0.4; }
 
+  /* ── LEGAJO / TARJETAS PDF ── */
+  .pdf-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .pdf-card {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 14px;
+    padding: 40px 20px;
+    border: 1px solid var(--line);
+    background: var(--warm-white);
+    text-decoration: none;
+    color: var(--charcoal);
+    transition: border-color 0.25s, background 0.25s, transform 0.25s;
+  }
+  .pdf-card:hover {
+    border-color: var(--accent-dark);
+    background: var(--cream);
+    transform: translateY(-3px);
+  }
+  .pdf-icon { font-size: 30px; color: var(--accent-dark); }
+  .pdf-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    text-align: center; color: var(--slate);
+  }
+
   /* ── LIGHTBOX ── */
   .lightbox {
     display: none;
@@ -297,6 +325,35 @@
      Borrá las que no uses en este proyecto
      ══════════════════════════════════ -->
 
+
+     <!-- LEGAJO Y PRESUPUESTO -->
+<div class="tool-section">
+  <div class="tool-header">
+    <div class="tool-icon">▤</div>
+    <h2 class="tool-name">Legajo y <em>Presupuesto</em></h2>
+  </div>
+  <p class="tool-desc">
+    Documentación técnica y presupuesto del proyecto, disponibles para consulta y descarga.
+  </p>
+  <div class="pdf-gallery">
+    <a class="pdf-card" href="proyecto 6/pdf/legajo.pdf" target="_blank" rel="noopener">
+      <span class="pdf-icon">▤</span>
+      <span class="pdf-name">Legajo técnico</span>
+    </a>
+    <a class="pdf-card" href="proyecto 6/pdf/presupuesto.pdf" target="_blank" rel="noopener">
+      <span class="pdf-icon">▤</span>
+      <span class="pdf-name">Presupuesto</span>
+    </a>
+    <a class="pdf-card" href="proyecto 6/pdf/diagramasyplanillas.pdf" target="_blank" rel="noopener">
+      <span class="pdf-icon">▤</span>
+      <span class="pdf-name">Diagramas y Planillas</span>
+    </a>
+    <a class="pdf-card" href="proyecto 6/pdf/legales.pdf" target="_blank" rel="noopener">
+      <span class="pdf-icon">▤</span>
+      <span class="pdf-name">Legales</span>
+    </a>
+  </div>
+</div>
 
      <!-- AUTOCAD -->
 <div class="tool-section">
@@ -392,44 +449,57 @@
       <img src="proyecto 6/images/autocad-19.jpg" alt="AutoCAD corte">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 20)">
-      <img src="proyecto 6/images/autocad-20.jpg" alt="AutoCAD corte">
+  </div>
+</div>
+
+<!-- INSTALACIONES -->
+<div class="tool-section">
+  <div class="tool-header">
+    <div class="tool-icon">◫</div>
+    <h2 class="tool-name">Instala<em>ciones</em></h2>
+  </div>
+  <p class="tool-desc">
+    Documentación de instalaciones del proyecto (sanitarias, eléctricas y complementarias).
+  </p>
+  <div class="gallery" id="gallery-instalaciones">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 0)">
+      <img src="proyecto 6/images/instalaciones-0.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 21)">
-      <img src="proyecto 6/images/autocad-21.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 1)">
+      <img src="proyecto 6/images/instalaciones-1.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 22)">
-      <img src="proyecto 6/images/autocad-22.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 2)">
+      <img src="proyecto 6/images/instalaciones-2.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 23)">
-      <img src="proyecto 6/images/autocad-23.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 3)">
+      <img src="proyecto 6/images/instalaciones-3.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 24)">
-      <img src="proyecto 6/images/autocad-24.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 4)">
+      <img src="proyecto 6/images/instalaciones-4.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 25)">
-      <img src="proyecto 6/images/autocad-25.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 5)">
+      <img src="proyecto 6/images/instalaciones-5.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 26)">
-      <img src="proyecto 6/images/autocad-26.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 6)">
+      <img src="proyecto 6/images/instalaciones-6.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 27)">
-      <img src="proyecto 6/images/autocad-27.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 7)">
+      <img src="proyecto 6/images/instalaciones-7.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 28)">
-      <img src="proyecto 6/images/autocad-28.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 8)">
+      <img src="proyecto 6/images/instalaciones-8.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('autocad', 29)">
-      <img src="proyecto 6/images/autocad-29.jpg" alt="AutoCAD corte">
+    <div class="gallery-item" onclick="openLightbox('instalaciones', 9)">
+      <img src="proyecto 6/images/instalaciones-9.jpg" alt="Instalaciones">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
   </div>
@@ -482,18 +552,42 @@
       <img src="proyecto 6/images/revit-8.jpg" alt="Revit corte">
       <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
     </div>
-    <div class="gallery-item" onclick="openLightbox('revit', 9)">
-      <img src="proyecto 6/images/revit-9.jpg" alt="Revit corte">
-      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-    </div>
-    <div class="gallery-item" onclick="openLightbox('revit', 10)">
-      <img src="proyecto 6/images/revit-10.jpg" alt="Revit corte">
-      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
-    </div>
-   
   </div>
 </div>
 
+
+<!-- MEP -->
+<div class="tool-section">
+  <div class="tool-header">
+    <div class="tool-icon">⌬</div>
+    <h2 class="tool-name">M<em>EP</em></h2>
+  </div>
+  <p class="tool-desc">
+    Modelado de instalaciones (Mechanical,& Plumbing) desarrollado en Revit MEP.
+  </p>
+  <div class="gallery" id="gallery-mep">
+    <div class="gallery-item" onclick="openLightbox('mep', 0)">
+      <img src="proyecto 6/images/mep-0.jpg" alt="MEP">
+      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('mep', 1)">
+      <img src="proyecto 6/images/mep-1.jpg" alt="MEP">
+      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('mep', 2)">
+      <img src="proyecto 6/images/mep-2.jpg" alt="MEP">
+      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('mep', 3)">
+      <img src="proyecto 6/images/mep-3.jpg" alt="MEP">
+      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+    </div>
+    <div class="gallery-item" onclick="openLightbox('mep', 4)">
+      <img src="proyecto 6/images/mep-4.jpg" alt="MEP">
+      <div class="gallery-item-overlay"><span class="gallery-zoom">⊕</span></div>
+    </div>
+  </div>
+</div>
 
 <!-- CORONA RENDER -->
 <div class="tool-section">
