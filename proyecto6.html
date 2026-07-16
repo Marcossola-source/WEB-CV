@@ -221,6 +221,7 @@
     background: var(--warm-white);
     text-decoration: none;
     color: var(--charcoal);
+    cursor: pointer;
     transition: border-color 0.25s, background 0.25s, transform 0.25s;
   }
   .pdf-card:hover {
@@ -336,24 +337,52 @@
     Documentación técnica y presupuesto del proyecto, disponibles para consulta y descarga.
   </p>
   <div class="pdf-gallery">
-    <a class="pdf-card" href="proyecto 6/PDF/Legajo.pdf" download="Legajo.pdf">
+    <div class="pdf-card" onclick="downloadPDF('proyecto 6/PDF/Legajo.pdf', 'Legajo.pdf', this)">
       <span class="pdf-icon">▤</span>
       <span class="pdf-name">Legajo técnico</span>
-    </a>
-    <a class="pdf-card" href="proyecto 6/PDF/Presupuesto.pdf" download="Presupuesto.pdf">
+    </div>
+    <div class="pdf-card" onclick="downloadPDF('proyecto 6/PDF/Presupuesto.pdf', 'Presupuesto.pdf', this)">
       <span class="pdf-icon">▤</span>
       <span class="pdf-name">Presupuesto</span>
-    </a>
-    <a class="pdf-card" href="proyecto 6/PDF/Diagramasyplanillas.pdf" download="Diagramasyplanillas.pdf">
+    </div>
+    <div class="pdf-card" onclick="downloadPDF('proyecto 6/PDF/Diagramasyplanillas.pdf', 'Diagramasyplanillas.pdf', this)">
       <span class="pdf-icon">▤</span>
       <span class="pdf-name">Diagramas y Planillas</span>
-    </a>
-    <a class="pdf-card" href="proyecto 6/PDF/Legales.pdf" download="Legales.pdf">
+    </div>
+    <div class="pdf-card" onclick="downloadPDF('proyecto 6/PDF/Legales.pdf', 'Legales.pdf', this)">
       <span class="pdf-icon">▤</span>
       <span class="pdf-name">Legales</span>
-    </a>
+    </div>
   </div>
 </div>
+
+<script>
+  async function downloadPDF(url, filename, cardEl) {
+    const nameEl = cardEl.querySelector('.pdf-name');
+    const originalText = nameEl.textContent;
+    nameEl.textContent = 'Descargando...';
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error('HTTP ' + response.status);
+      }
+      const blob = await response.blob();
+      const blobUrl = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = blobUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+      nameEl.textContent = originalText;
+    } catch (err) {
+      nameEl.textContent = 'No disponible';
+      console.error('Error al descargar ' + filename + ':', err);
+      setTimeout(() => { nameEl.textContent = originalText; }, 2500);
+    }
+  }
+</script>
 
      <!-- AUTOCAD -->
 <div class="tool-section">
